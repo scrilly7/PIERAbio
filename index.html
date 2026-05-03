@@ -326,6 +326,9 @@
     max-width: 760px;
     margin-top: 32px;
   }
+  .pathway-figure + .science-prose {
+    margin-top: 0;
+  }
   .science-prose p {
     font-size: clamp(17px, 1.6vw, 19px);
     line-height: 1.65;
@@ -334,6 +337,43 @@
     margin: 0 0 22px 0;
   }
   .science-prose p:last-child { margin-bottom: 0; }
+
+  .pathway-figure {
+    margin: 56px 0 56px 0;
+    padding: 0;
+  }
+  @media (min-width: 720px) {
+    .pathway-figure { margin: 64px 0 64px 0; }
+  }
+  .pathway-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+  }
+  @media (max-width: 720px) {
+    .pathway-figure {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pathway-figure img {
+      min-width: 720px;
+      width: 720px;
+    }
+  }
+  .pathway-figure figcaption {
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  .pathway-figure figcaption em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
 
   /* ---------- Tissues ---------- */
   .tissues {
@@ -398,6 +438,92 @@
     font-size: 14px;
     line-height: 1.6;
     font-weight: 300;
+  }
+
+  /* ---------- Image bands ---------- */
+  .image-band {
+    background: #050d1a;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .image-band-inner {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 32%;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) {
+    .image-band-inner { padding-bottom: 56%; }
+  }
+  .image-band img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+  .image-band::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(5, 13, 26, 0.8) 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .image-band::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(0deg, rgba(5, 13, 26, 1) 0%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .image-band-caption {
+    position: relative;
+    z-index: 3;
+    margin: 0;
+    padding: 24px 32px 40px 32px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--silver-warm);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    background: #050d1a;
+  }
+  .image-band-caption em {
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  /* Jellyfish-specific — taller aspect, tighter top/bottom fades */
+  .image-band-jellyfish .image-band-inner {
+    padding-bottom: 38%;
+  }
+  @media (max-width: 720px) {
+    .image-band-jellyfish .image-band-inner { padding-bottom: 70%; }
+  }
+
+  /* Water-specific — slimmer band, no caption */
+  .image-band-water .image-band-inner {
+    padding-bottom: 28%;
+  }
+  @media (max-width: 720px) {
+    .image-band-water .image-band-inner { padding-bottom: 50%; }
+  }
+  .image-band-water::before {
+    /* lighter top fade — water already has its own gradient */
+    background: linear-gradient(180deg, rgba(5, 13, 26, 0.4) 0%, transparent 100%);
+    height: 60px;
   }
 
   /* ---------- Hallmarks ---------- */
@@ -877,6 +1003,16 @@
     </div>
   </section>
 
+  <!-- ============== JELLYFISH BAND ============== -->
+  <section class="image-band image-band-jellyfish" aria-label="Turritopsis dohrnii, the immortal jellyfish">
+    <div class="image-band-inner">
+      <img src="jellyfish.png" alt="A small translucent jellyfish suspended in dark water, glowing softly with internal gold light." />
+    </div>
+    <p class="image-band-caption">
+      <em>Turritopsis dohrnii.</em> The only known animal capable of biologically reversing its own aging.
+    </p>
+  </section>
+
   <!-- ============== SCIENCE ============== -->
   <section class="what-we-do" id="what-we-do" aria-labelledby="wwd-heading">
     <div class="container">
@@ -890,6 +1026,16 @@
         <p>
           Their production depends on a single enzyme, ELOVL2. Beginning in middle age, the gene that produces ELOVL2 is progressively silenced through DNA methylation &mdash; not damaged, just switched off. The tissues that depend on these lipids continue to demand them. The supply quietly fails.
         </p>
+      </div>
+
+      <figure class="pathway-figure">
+        <img src="pathway.png" alt="Diagram of the ELOVL2 pathway. DHA is elongated by ELOVL2 to C24:5n-3, then by ELOVL4 to very long-chain PUFAs (C30 to C36), which serve as structural lipids in photoreceptor membranes and as precursors to elovanoid signaling mediators." />
+        <figcaption>
+          <em>The ELOVL2 pathway.</em> Very long-chain PUFAs and their lipid signaling derivatives.
+        </figcaption>
+      </figure>
+
+      <div class="science-prose">
         <p>
           ELOVL2 methylation is now recognized as one of the strongest molecular markers of biological age ever identified. It does not simply correlate with aging; it is upstream of a class of lipids the body uses to maintain itself. That makes restoring these lipids a direct intervention on a fundamental aging pathway, rather than a downstream symptom of it.
         </p>
@@ -1073,6 +1219,13 @@
     </div>
   </section>
 
+  <!-- ============== WATER BAND ============== -->
+  <section class="image-band image-band-water" aria-label="Light through deep water">
+    <div class="image-band-inner">
+      <img src="water.png" alt="Shafts of warm gold sunlight cutting downward through deep dark water." />
+    </div>
+  </section>
+
   <!-- ============== CONSUMER BRAND ============== -->
   <section class="consumer" id="consumer" aria-labelledby="consumer-heading">
     <div class="container layout">
@@ -1150,10 +1303,6 @@
 
     <div class="footer-bottom">
       <div class="footer-meta">&copy; 2026 Piera Bioscience, Inc. All rights reserved.</div>
-      <nav class="footer-utility" aria-label="Legal">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-      </nav>
     </div>
   </div>
 </footer>
