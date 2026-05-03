@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  Piera Bioscience — single-file landing page for GitHub Pages.
+  All CSS embedded. No JS, no external images, no build step.
+
+  Notes / reasonable choices made from the context file:
+  - Voice locked to the corporate (Layer 1) message: "We study bioactive lipids."
+    Consumer (ELOVL) voice is reserved for elovl.com per the messaging hierarchy.
+  - "Restoring Ocular Lipids" is retired per the narrative reframe; no tagline is
+    finalized yet, so the hero leads with the locked identity sentence rather
+    than a placeholder tagline.
+  - The dot-mandala motif is recreated as inline SVG, used subtly in the hero
+    and as a footer mark.
+  - System font stack used for speed; bold uppercase wordmark is type-driven.
+  - Pipeline section reflects the three-pillar platform (supplement /
+    diagnostic / manufacturing) at a high level appropriate for a corporate
+    page; no specific therapeutic claims, no investor financials.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piera Bioscience</title>
+<meta name="description" content="Piera Bioscience studies bioactive structural lipids — the molecules the body produces to sustain its most active tissues and stops producing with age.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050d1a'/%3E%3Ccircle cx='16' cy='16' r='3' fill='none' stroke='%23c9a85c' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='8' r='1.2' fill='%23c9a85c'/%3E%3Ccircle cx='16' cy='24' r='1.2' fill='%23c9a85c'/%3E%3Ccircle cx='8' cy='16' r='1.2' fill='%23c9a85c'/%3E%3Ccircle cx='24' cy='16' r='1.2' fill='%23c9a85c'/%3E%3C/svg%3E">
+
+<style>
+  :root {
+    /* Deeper navy palette */
+    --navy-deepest: #03080f;
+    --navy-950: #050d1a;
+    --navy-900: #07111f;
+    --navy-800: #0a1828;
+    --navy-700: #0f2238;
+    --navy-line: #1a2f4a;
+
+    --gold: #c9a85c;
+    --gold-bright: #e6c987;
+    --gold-deep: #a8873e;
+
+    --silver: #f5f3ee;
+    --silver-warm: #ece8df;
+    --silver-line: #d9d3c5;
+
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3d;
+    --ink-mute: #6b6b6b;
+
+    --gold-gradient: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold-bright) 45%, var(--gold) 70%, var(--gold-deep) 100%);
+
+    /* Navy gradients — depth without flatness */
+    --navy-gradient-hero:
+      radial-gradient(ellipse at 15% 20%, rgba(40, 70, 110, 0.35), transparent 55%),
+      radial-gradient(ellipse at 85% 90%, rgba(10, 24, 40, 0.9), transparent 60%),
+      linear-gradient(165deg, #0a1828 0%, #050d1a 50%, #03080f 100%);
+    --navy-gradient-consumer:
+      radial-gradient(ellipse at 80% 30%, rgba(45, 75, 115, 0.3), transparent 55%),
+      linear-gradient(180deg, #050d1a 0%, #07111f 50%, #03080f 100%);
+
+    --max-width: 1100px;
+    --gutter: 32px;
+
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--silver);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: var(--navy-700);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(21, 48, 77, 0.25);
+    transition: border-color 160ms ease, color 160ms ease;
+  }
+  a:hover, a:focus { border-bottom-color: var(--navy-700); }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ---------- Header ---------- */
+  .site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    color: var(--silver);
+    background: transparent;
+  }
+  .site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .header-mark {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    color: var(--silver);
+  }
+  .header-mark .small {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    vertical-align: middle;
+  }
+  .header-nav a {
+    color: var(--silver-warm);
+    margin-left: 28px;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom-color: transparent;
+  }
+  .header-nav a:hover, .header-nav a:focus {
+    color: var(--gold-bright);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    background: var(--navy-gradient-hero);
+    color: var(--silver);
+    overflow: hidden;
+    padding-top: 84px; /* room for absolutely positioned header */
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 0%, rgba(201, 168, 92, 0.05), transparent 50%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.4), transparent);
+    pointer-events: none;
+  }
+  .hero .container {
+    position: relative;
+    padding-top: 110px;
+    padding-bottom: 130px;
+    max-width: 880px;
+  }
+  .wordmark, .hero-statement, .hero-ctas {
+    text-align: left;
+  }
+
+  .wordmark {
+    line-height: 0.9;
+  }
+  .wordmark .word-piera {
+    display: block;
+    font-weight: 900;
+    font-size: clamp(64px, 11vw, 132px);
+    letter-spacing: -0.01em;
+    color: var(--silver);
+    text-transform: uppercase;
+  }
+  .wordmark .word-bioscience {
+    display: block;
+    margin-top: 14px;
+    font-weight: 300;
+    font-size: clamp(20px, 3vw, 30px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--silver-warm);
+  }
+  .wordmark .accent-rule {
+    display: block;
+    margin-top: 28px;
+    width: 88px;
+    height: 2px;
+    background: var(--gold-gradient);
+    border-radius: 1px;
+  }
+
+  .hero-statement {
+    margin-top: 40px;
+    max-width: 620px;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--silver);
+  }
+  .hero-statement strong {
+    font-weight: 500;
+    color: var(--gold-bright);
+  }
+
+  .hero-ctas {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 14px 26px;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn-primary {
+    background: var(--gold-gradient);
+    color: var(--navy-900);
+    border-bottom: 0;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    transform: translateY(-1px);
+    border-bottom: 0;
+  }
+  .btn-ghost {
+    color: var(--silver);
+    border: 1px solid rgba(245, 243, 238, 0.4);
+    border-bottom: 1px solid rgba(245, 243, 238, 0.4);
+  }
+  .btn-ghost:hover, .btn-ghost:focus {
+    color: var(--gold-bright);
+    border-color: var(--gold);
+  }
+
+  /* ---------- Section base ---------- */
+  section { padding: 96px 0; }
+  @media (max-width: 720px) {
+    section { padding: 72px 0; }
+    .hero .container { padding-top: 80px; padding-bottom: 90px; }
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 18px;
+  }
+  .eyebrow.on-dark { color: var(--gold-bright); }
+
+  h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 28px 0;
+    color: var(--navy-900);
+  }
+  h2.on-dark { color: var(--silver); }
+
+  .lede {
+    font-size: clamp(18px, 1.8vw, 21px);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 760px;
+    font-weight: 300;
+  }
+  .lede.on-dark { color: var(--silver-warm); }
+
+  /* ---------- Who we are ---------- */
+  .who {
+    background: var(--silver);
+    border-bottom: 1px solid var(--silver-line);
+  }
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media (min-width: 860px) {
+    .who-grid {
+      grid-template-columns: 5fr 6fr;
+      gap: 80px;
+    }
+  }
+  .who-left h2 {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 400;
+    line-height: 1.25;
+    margin-top: 16px;
+    color: var(--navy-900);
+    letter-spacing: -0.005em;
+  }
+  .who-right p {
+    font-size: clamp(16px, 1.4vw, 17px);
+    line-height: 1.7;
+    color: var(--ink-soft);
+    font-weight: 300;
+    margin: 0 0 18px 0;
+  }
+  .who-right p:last-child { margin-bottom: 0; }
+
+  /* ---------- What we do ---------- */
+  .science-prose {
+    max-width: 760px;
+    margin-top: 32px;
+  }
+  .science-prose p {
+    font-size: clamp(17px, 1.6vw, 19px);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    font-weight: 300;
+    margin: 0 0 22px 0;
+  }
+  .science-prose p:last-child { margin-bottom: 0; }
+
+  /* ---------- Tissues ---------- */
+  .tissues {
+    background: var(--silver);
+    border-top: 1px solid var(--silver-line);
+  }
+  .tissues .lede { margin-bottom: 56px; }
+  .tissue-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--silver-line);
+    border-top: 1px solid var(--silver-line);
+    border-bottom: 1px solid var(--silver-line);
+  }
+  @media (min-width: 600px) {
+    .tissue-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 880px) {
+    .tissue-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .tissue-tile {
+    background: var(--silver);
+    padding: 28px 26px 32px 26px;
+    margin: 0;
+  }
+  .tissue-tile h3 {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--navy-900);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.005em;
+  }
+  .tissue-tile p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .tissue-tile.lead {
+    background: linear-gradient(165deg, #07111f 0%, #050d1a 100%);
+    color: var(--silver);
+    padding: 32px 28px 36px 28px;
+    position: relative;
+  }
+  .tissue-tile.lead .tissue-label {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .tissue-tile.lead h3 {
+    color: var(--silver);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .tissue-tile.lead p {
+    color: var(--silver-warm);
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ---------- Hallmarks ---------- */
+  .hallmarks {
+    background: var(--navy-gradient-consumer);
+    color: var(--silver);
+    position: relative;
+    overflow: hidden;
+  }
+  .hallmarks::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.5), transparent);
+  }
+  .hallmarks::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.3), transparent);
+  }
+  .hallmarks .lede { margin-bottom: 64px; }
+
+  .hallmark-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(201, 168, 92, 0.14);
+    border-top: 1px solid rgba(201, 168, 92, 0.2);
+    border-bottom: 1px solid rgba(201, 168, 92, 0.2);
+  }
+  @media (min-width: 600px) {
+    .hallmark-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 880px) {
+    .hallmark-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .hallmark {
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.85) 0%, rgba(5, 13, 26, 0.95) 100%);
+    padding: 28px 24px 30px 24px;
+    margin: 0;
+  }
+  .hallmark .h-num {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--gold-bright);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .hallmark h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--silver);
+    margin: 0 0 16px 0;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .hallmark p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--silver-warm);
+    font-weight: 300;
+  }
+  .hallmark .h-aging {
+    color: rgba(245, 243, 238, 0.55);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(201, 168, 92, 0.18);
+  }
+  .hallmark .h-vlc {
+    color: var(--silver-warm);
+  }
+  .hallmark .h-vlc em {
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  .hallmark-footnote {
+    margin: 0;
+    padding-top: 32px;
+    margin-top: 40px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gold-bright);
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+  .hallmark-footnote::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 1px;
+    background: var(--gold-gradient);
+    opacity: 0.6;
+  }
+  .hallmark-footnote em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* ---------- Consumer brand ---------- */
+  .consumer {
+    background: var(--navy-gradient-consumer);
+    color: var(--silver);
+    position: relative;
+    overflow: hidden;
+  }
+  .consumer::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.5), transparent);
+  }
+  .consumer::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.3), transparent);
+  }
+  .consumer .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 860px) {
+    .consumer .layout { grid-template-columns: 1.2fr 1fr; gap: 80px; }
+  }
+  .consumer-card {
+    border: 1px solid rgba(201, 168, 92, 0.2);
+    background: linear-gradient(155deg, rgba(15, 34, 56, 0.6) 0%, rgba(7, 17, 31, 0.8) 100%);
+    padding: 48px;
+    border-radius: 4px;
+    position: relative;
+    backdrop-filter: blur(2px);
+  }
+  .consumer-card .brand-line {
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .consumer-card .brand-name {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.05;
+    color: var(--silver);
+    margin: 0 0 12px 0;
+  }
+  .consumer-card .brand-sub {
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--gold-bright);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .consumer-card .brand-desc {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--silver-warm);
+    margin: 0 0 28px 0;
+  }
+  .consumer-card a.btn {
+    border-bottom: 0;
+  }
+
+  /* ---------- Pipeline ---------- */
+  .pipeline {
+    background: var(--silver-warm);
+  }
+  .pipeline .lede { margin-bottom: 48px; }
+
+  .platform-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--silver-line);
+  }
+  .platform-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px 28px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--silver-line);
+    align-items: baseline;
+  }
+  @media (min-width: 720px) {
+    .platform-row {
+      grid-template-columns: 56px 180px 1fr;
+      gap: 32px;
+      padding: 24px 0;
+    }
+  }
+  .platform-row .row-num {
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold-deep);
+    font-weight: 500;
+  }
+  .platform-row .row-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy-900);
+    letter-spacing: -0.005em;
+    grid-column: 2;
+  }
+  @media (min-width: 720px) {
+    .platform-row .row-name { grid-column: auto; }
+  }
+  .platform-row .row-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    grid-column: 2;
+  }
+  @media (min-width: 720px) {
+    .platform-row .row-desc { grid-column: auto; }
+  }
+
+  /* ---------- Contact ---------- */
+  .contact {
+    background: var(--silver);
+    padding: 64px 0;
+  }
+  @media (max-width: 720px) {
+    .contact { padding: 56px 0; }
+  }
+  .contact .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (min-width: 760px) {
+    .contact .layout {
+      grid-template-columns: auto 1fr;
+      gap: 64px;
+    }
+  }
+  .contact-intro h2 {
+    margin-bottom: 0;
+  }
+  .contact-intro .eyebrow {
+    margin-bottom: 12px;
+  }
+  .contact-details {
+    border-left: 2px solid var(--gold);
+    padding-left: 28px;
+  }
+  @media (max-width: 760px) {
+    .contact-details {
+      border-left: 0;
+      border-top: 1px solid var(--silver-line);
+      padding-left: 0;
+      padding-top: 24px;
+    }
+  }
+  .contact-lede {
+    margin: 0 0 14px 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 540px;
+  }
+  .contact-email {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .contact-email a {
+    color: var(--navy-900);
+    border-bottom: 1px solid rgba(168, 135, 62, 0.4);
+  }
+  .contact-email a:hover, .contact-email a:focus {
+    border-bottom-color: var(--gold-deep);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: linear-gradient(180deg, #03080f 0%, #050d1a 100%);
+    color: var(--silver-warm);
+    padding: 64px 0 32px 0;
+    position: relative;
+  }
+  footer::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.3), transparent);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(201, 168, 92, 0.12);
+  }
+  @media (min-width: 760px) {
+    .footer-top {
+      grid-template-columns: 1fr 2fr;
+      gap: 64px;
+    }
+  }
+  .footer-brand {
+    max-width: 320px;
+  }
+  .footer-mark {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.24em;
+    color: var(--silver);
+  }
+  .footer-mark span {
+    display: inline-block;
+    margin-left: 8px;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    vertical-align: middle;
+  }
+  .footer-tagline {
+    margin: 14px 0 0 0;
+    font-size: 13px;
+    color: rgba(245, 243, 238, 0.6);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 540px) {
+    .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  }
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-col-head {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .footer-col a {
+    color: var(--silver-warm);
+    border-bottom-color: transparent;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .footer-col a:hover, .footer-col a:focus {
+    color: var(--gold-bright);
+    border-bottom-color: rgba(201, 168, 92, 0.4);
+  }
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-top: 28px;
+    align-items: center;
+  }
+  @media (min-width: 540px) {
+    .footer-bottom {
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+    }
+  }
+  .footer-meta {
+    font-size: 12px;
+    color: rgba(245, 243, 238, 0.45);
+  }
+  .footer-utility {
+    font-size: 12px;
+    display: flex;
+    gap: 24px;
+  }
+  .footer-utility a {
+    color: rgba(245, 243, 238, 0.55);
+    border-bottom-color: transparent;
+  }
+  .footer-utility a:hover, .footer-utility a:focus {
+    color: var(--gold-bright);
+    border-bottom-color: rgba(201, 168, 92, 0.4);
+  }
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+  }
+  .skip-link:focus {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    background: var(--gold);
+    color: var(--navy-900);
+    padding: 10px 14px;
+    border-radius: 2px;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-mark">PIERA <span class="small">BIOSCIENCE</span></div>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#who">Company</a>
+      <a href="#what-we-do">Science</a>
+      <a href="#hallmarks">Hallmarks</a>
+      <a href="#pipeline">Platform</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============== HERO ============== -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div>
+        <h1 class="wordmark" id="hero-heading">
+          <span class="word-piera">Piera</span>
+          <span class="word-bioscience">Bioscience</span>
+          <span class="accent-rule" aria-hidden="true"></span>
+        </h1>
+        <p class="hero-statement">
+          A biotech company building around <strong>VLC-PUFAs</strong> &mdash; the specialized structural lipids the body produces to sustain its most metabolically active tissues, and stops producing with age.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#what-we-do">Read the science</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============== WHO WE ARE ============== -->
+  <section class="who" id="who" aria-labelledby="who-heading">
+    <div class="container">
+      <div class="who-grid">
+        <div class="who-left">
+          <span class="eyebrow">Who we are</span>
+          <h2 id="who-heading">A class of lipids the body once made for itself, and stopped making with age. We are the company built to solve that.</h2>
+        </div>
+        <div class="who-right">
+          <p>
+            With age, the body silences the production of a class of lipids that several of its most important tissues depend on. The retina is the most visible casualty. The brain, the cardiovascular system, and reproductive tissues are the next questions. There is no current product that addresses the underlying deficit at its source.
+          </p>
+          <p>
+            Piera was founded to change that. We are scientists, operators, and clinicians focused on a single problem: producing these lipids at the quality and scale modern biology requires, and getting them to the tissues that need them. We work across the full pathway &mdash; from production to delivery to measurement &mdash; with a clear sequence of programs that begins with vision and extends into the rest of the systems where this biology applies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SCIENCE ============== -->
+  <section class="what-we-do" id="what-we-do" aria-labelledby="wwd-heading">
+    <div class="container">
+      <span class="eyebrow">The science</span>
+      <h2 id="wwd-heading">A class of lipids the body forgets how to make.</h2>
+
+      <div class="science-prose">
+        <p>
+          Very long-chain polyunsaturated fatty acids (VLC-PUFAs) are a specialized family of structural lipids built from the same omega-3 raw materials the body already uses, then extended into longer, rarer molecules with properties standard fats cannot replicate. They are not consumed in the diet in any meaningful quantity. The body manufactures them internally, in the tissues that need them most.
+        </p>
+        <p>
+          Their production depends on a single enzyme, ELOVL2. Beginning in middle age, the gene that produces ELOVL2 is progressively silenced through DNA methylation &mdash; not damaged, just switched off. The tissues that depend on these lipids continue to demand them. The supply quietly fails.
+        </p>
+        <p>
+          ELOVL2 methylation is now recognized as one of the strongest molecular markers of biological age ever identified. It does not simply correlate with aging; it is upstream of a class of lipids the body uses to maintain itself. That makes restoring these lipids a direct intervention on a fundamental aging pathway, rather than a downstream symptom of it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== TISSUES ============== -->
+  <section class="tissues" id="tissues" aria-labelledby="tissues-heading">
+    <div class="container">
+      <span class="eyebrow">Where VLC-PUFAs matter</span>
+      <h2 id="tissues-heading">Tissues of focus.</h2>
+      <p class="lede">
+        VLC-PUFAs are concentrated in the body&rsquo;s most metabolically active tissues, and the consequences of their decline are tissue-specific. We are starting where the biology is strongest, with a roadmap into the systems where the same pathway applies.
+      </p>
+
+      <div class="tissue-grid">
+        <article class="tissue-tile lead">
+          <div class="tissue-label">Lead program</div>
+          <h3>Retina</h3>
+          <p>
+            The retina consumes more oxygen per gram than almost any other tissue. Photoreceptor membranes depend on a continuous supply of VLC-PUFAs to function under that load. When the pathway slows, the retina is among the first tissues to show it &mdash; and where intervention is possible today.
+          </p>
+        </article>
+
+        <article class="tissue-tile">
+          <h3>Brain</h3>
+          <p>VLC-PUFAs are present in neural tissue and are being studied for their roles in membrane signaling and cognitive function with age.</p>
+        </article>
+
+        <article class="tissue-tile">
+          <h3>Reproductive tissue</h3>
+          <p>VLC-PUFAs are found in high concentrations in reproductive tissues, with active research on fertility and gamete development.</p>
+        </article>
+
+        <article class="tissue-tile">
+          <h3>Skin &amp; barrier</h3>
+          <p>Related lipids contribute to skin structure and barrier integrity, with measurable changes observed across the aging timeline.</p>
+        </article>
+
+        <article class="tissue-tile">
+          <h3>Cardiovascular</h3>
+          <p>Early research explores connections between the VLC-PUFA pathway and the metabolic and inflammatory processes underlying cardiovascular aging.</p>
+        </article>
+
+        <article class="tissue-tile">
+          <h3>Skeletal muscle</h3>
+          <p>Muscle is among the most metabolically active tissues in the body. The VLC-PUFA pathway is an emerging area of research in muscle metabolism, performance, and age-related decline.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== HALLMARKS ============== -->
+  <section class="hallmarks" id="hallmarks" aria-labelledby="hallmarks-heading">
+    <div class="container">
+      <span class="eyebrow on-dark">Hallmarks of aging</span>
+      <h2 class="on-dark" id="hallmarks-heading">VLC-PUFAs and the hallmarks of aging.</h2>
+      <p class="lede on-dark">
+        The hallmarks of aging are the canonical framework for understanding why bodies age. Emerging research suggests VLC-PUFAs and their derivatives engage many of these hallmarks directly &mdash; a convergent lipid axis through what has historically been treated as twelve separate problems.
+      </p>
+
+      <div class="hallmark-grid">
+        <article class="hallmark">
+          <div class="h-num">01</div>
+          <h3>Genomic Instability</h3>
+          <p class="h-aging">DNA damage accumulates and drives dysfunctional cell behavior.</p>
+          <p class="h-vlc">Direct DNA-damage studies in VLC-PUFA models have not yet been performed. An open research area.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">02</div>
+          <h3>Telomere Attrition</h3>
+          <p class="h-aging">Protective caps on chromosomes erode, limiting tissue regeneration.</p>
+          <p class="h-vlc">VLC-PUFA-derived elovanoids have been shown to restore telomerase (TERT) expression in stressed neurons.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">03</div>
+          <h3>Epigenetic Alterations</h3>
+          <p class="h-aging">Changes to gene expression silence the programs that keep cells young.</p>
+          <p class="h-vlc">ELOVL2 methylation is the strongest known epigenetic clock signal. VLC-PUFAs bypass the resulting deficit.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">04</div>
+          <h3>Loss of Proteostasis</h3>
+          <p class="h-aging">Cells lose the ability to fold proteins correctly and clear what doesn&rsquo;t.</p>
+          <p class="h-vlc">ELOVL2 loss triggers ER stress and unfolded protein response. VLC-PUFAs reduce tau hyperphosphorylation in neural models.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">05</div>
+          <h3>Deregulated Nutrient Sensing</h3>
+          <p class="h-aging">Cells respond poorly to the metabolic signals that govern growth and energy.</p>
+          <p class="h-vlc">AdipoR1, a key nutrient-sensing receptor, regulates VLC-PUFA production in cells. The pathway is integrated into cellular energy decisions.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">06</div>
+          <h3>Mitochondrial Dysfunction</h3>
+          <p class="h-aging">Energy production declines and oxidative damage accumulates.</p>
+          <p class="h-vlc">VLC-PUFA loss reduces mitochondrial respiratory capacity by approximately 50%. Restoration reverses cellular aging phenotypes.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">07</div>
+          <h3>Cellular Senescence</h3>
+          <p class="h-aging">Damaged cells accumulate, driving chronic inflammation and tissue decline.</p>
+          <p class="h-vlc">VLC-PUFAs and elovanoids suppress canonical senescence markers (p16, p21, p27, p53) and the inflammatory SASP secretome.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">08</div>
+          <h3>Stem Cell Exhaustion</h3>
+          <p class="h-aging">Tissues lose the ability to generate healthy replacement cells.</p>
+          <p class="h-vlc">VLC-PUFA depletion accelerates stem cell exhaustion across tissues. Repletion supports neurogenesis after injury.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">09</div>
+          <h3>Altered Intercellular Communication</h3>
+          <p class="h-aging">Cell-to-cell signaling becomes noisy and dysfunctional with age.</p>
+          <p class="h-vlc">Elovanoids <em>are</em> intercellular signaling molecules &mdash; paracrine lipid mediators that coordinate tissue homeostasis between cells.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">10</div>
+          <h3>Dysbiosis</h3>
+          <p class="h-aging">An imbalance in the gut microbiome contributes to age-related conditions.</p>
+          <p class="h-vlc">Omega-3 fatty acids broadly support microbiome diversity, but VLC-PUFA-specific microbiome research has not been performed.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">11</div>
+          <h3>Disabled Macroautophagy</h3>
+          <p class="h-aging">Cellular cleanup and recycling systems decline, allowing waste to accumulate.</p>
+          <p class="h-vlc">VLC-PUFA disruption impairs lysosomal clearance. Elovanoids restore expression of autophagy genes in stressed cells.</p>
+        </article>
+
+        <article class="hallmark">
+          <div class="h-num">12</div>
+          <h3>Chronic Inflammation</h3>
+          <p class="h-aging">A persistent low-grade inflammation disrupts tissue function and immunity.</p>
+          <p class="h-vlc">Elovanoids are pro-resolving lipid mediators. They suppress TNF-alpha, MCP-1, NLRP3 inflammasome activation, and chronic sterile inflammation.</p>
+        </article>
+      </div>
+
+      <p class="hallmark-footnote">
+        <em>Some hallmarks reflect direct mechanistic evidence. Others reflect emerging or open areas of research, and we say so.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============== PLATFORM ============== -->
+  <section class="pipeline" id="pipeline" aria-labelledby="pipeline-heading">
+    <div class="container">
+      <span class="eyebrow">Platform</span>
+      <h2 id="pipeline-heading">Next-generation lipid production and delivery.</h2>
+      <p class="lede">
+        Three capabilities define the company: how we produce VLC-PUFAs, how we deliver them to the tissues that need them, and how we measure the underlying pathway. Each is being developed in-house, and each contributes to the same end &mdash; restoring a class of lipids the body has stopped making for itself.
+      </p>
+
+      <ul class="platform-list">
+        <li class="platform-row">
+          <div class="row-num">01</div>
+          <div class="row-name">Production</div>
+          <div class="row-desc">Proprietary methods to produce VLC-PUFAs at higher concentrations and lower cost than is currently possible from natural sources.</div>
+        </li>
+        <li class="platform-row">
+          <div class="row-num">02</div>
+          <div class="row-name">Delivery</div>
+          <div class="row-desc">Formulation and delivery systems engineered to put VLC-PUFAs where the body needs them, beginning with the retina.</div>
+        </li>
+        <li class="platform-row">
+          <div class="row-num">03</div>
+          <div class="row-name">Pathway</div>
+          <div class="row-desc">Direct measurement of the underlying enzymatic pathway, allowing intervention to be guided by biology rather than inference.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============== CONSUMER BRAND ============== -->
+  <section class="consumer" id="consumer" aria-labelledby="consumer-heading">
+    <div class="container layout">
+      <div>
+        <span class="eyebrow on-dark">Consumer brand</span>
+        <h2 class="on-dark" id="consumer-heading">The first commercial expression of the platform.</h2>
+        <p class="lede on-dark">
+          ELOVL brings VLC-PUFAs out of the research literature and into a daily product, beginning with vision. Piera develops the science; ELOVL brings it to people.
+        </p>
+      </div>
+
+      <div class="consumer-card">
+        <div class="brand-line">By Piera</div>
+        <div class="brand-name">ELOVL&trade;</div>
+        <div class="brand-sub">A daily oral VLC-PUFA for the retina</div>
+        <p class="brand-desc">
+          The first product, Vision Lipids&trade;, is a daily oral VLC-PUFA formulated for adults whose retinal lipid production has begun to decline with age.
+        </p>
+        <a class="btn btn-primary" href="https://elovl.com" rel="noopener">Visit elovl.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CONTACT ============== -->
+  <section class="contact" id="contact" aria-labelledby="contact-heading">
+    <div class="container layout">
+      <div class="contact-intro">
+        <span class="eyebrow">Contact</span>
+        <h2 id="contact-heading">Get in touch.</h2>
+      </div>
+
+      <div class="contact-details">
+        <p class="contact-lede">
+          For partnership, research collaboration, or general inquiries, email the founder directly. For investor inquiries, please use &ldquo;Investor&rdquo; in the subject line.
+        </p>
+        <p class="contact-email">
+          <a href="mailto:steve@pierabio.com">steve@pierabio.com</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-mark">PIERA <span>BIOSCIENCE</span></div>
+        <p class="footer-tagline">
+          The VLC-PUFA company.
+        </p>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-head">Company</div>
+          <a href="#who">Who we are</a>
+          <a href="#what-we-do">Science</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-head">Programs</div>
+          <a href="#tissues">Tissues of focus</a>
+          <a href="#hallmarks">Hallmarks of aging</a>
+          <a href="#pipeline">Platform</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-head">Products</div>
+          <a href="https://elovl.com" rel="noopener">ELOVL</a>
+          <a href="mailto:steve@pierabio.com">Investor inquiries</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-meta">&copy; 2026 Piera Bioscience, Inc. All rights reserved.</div>
+      <nav class="footer-utility" aria-label="Legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
