@@ -326,9 +326,6 @@
     max-width: 760px;
     margin-top: 32px;
   }
-  .pathway-figure + .science-prose {
-    margin-top: 0;
-  }
   .science-prose p {
     font-size: clamp(17px, 1.6vw, 19px);
     line-height: 1.65;
@@ -338,21 +335,45 @@
   }
   .science-prose p:last-child { margin-bottom: 0; }
 
-  .pathway-figure {
-    margin: 56px 0 56px 0;
-    padding: 0;
+  .pathway-band {
+    background: linear-gradient(165deg, #0a1828 0%, #050d1a 50%, #03080f 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
   }
-  @media (min-width: 720px) {
-    .pathway-figure { margin: 64px 0 64px 0; }
+  @media (max-width: 720px) {
+    .pathway-band { padding: 56px 0; }
+  }
+  .pathway-band::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.3), transparent);
+  }
+  .pathway-band::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 92, 0.3), transparent);
+  }
+  .pathway-band-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .pathway-figure {
+    margin: 0;
+    padding: 0;
   }
   .pathway-figure img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 4px;
   }
   @media (max-width: 720px) {
-    .pathway-figure {
+    .pathway-band-inner {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -362,17 +383,17 @@
     }
   }
   .pathway-figure figcaption {
-    margin-top: 18px;
+    margin-top: 24px;
     font-size: 13px;
     line-height: 1.55;
-    color: var(--ink-mute);
+    color: var(--silver-warm);
     text-align: center;
     font-weight: 300;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
   }
   .pathway-figure figcaption em {
     font-style: italic;
-    color: var(--gold-deep);
+    color: var(--gold-bright);
   }
 
   /* ---------- Tissues ---------- */
@@ -1026,20 +1047,22 @@
         <p>
           Their production depends on a single enzyme, ELOVL2. Beginning in middle age, the gene that produces ELOVL2 is progressively silenced through DNA methylation &mdash; not damaged, just switched off. The tissues that depend on these lipids continue to demand them. The supply quietly fails.
         </p>
+        <p>
+          ELOVL2 methylation is now recognized as one of the strongest molecular markers of biological age ever identified. It does not simply correlate with aging; it is upstream of a class of lipids the body uses to maintain itself. That makes restoring these lipids a direct intervention on a fundamental aging pathway, rather than a downstream symptom of it.
+        </p>
       </div>
+    </div>
+  </section>
 
+  <!-- ============== PATHWAY BAND ============== -->
+  <section class="pathway-band" aria-label="The ELOVL2 pathway">
+    <div class="pathway-band-inner">
       <figure class="pathway-figure">
         <img src="pathway.png" alt="Diagram of the ELOVL2 pathway. DHA is elongated by ELOVL2 to C24:5n-3, then by ELOVL4 to very long-chain PUFAs (C30 to C36), which serve as structural lipids in photoreceptor membranes and as precursors to elovanoid signaling mediators." />
         <figcaption>
           <em>The ELOVL2 pathway.</em> Very long-chain PUFAs and their lipid signaling derivatives.
         </figcaption>
       </figure>
-
-      <div class="science-prose">
-        <p>
-          ELOVL2 methylation is now recognized as one of the strongest molecular markers of biological age ever identified. It does not simply correlate with aging; it is upstream of a class of lipids the body uses to maintain itself. That makes restoring these lipids a direct intervention on a fundamental aging pathway, rather than a downstream symptom of it.
-        </p>
-      </div>
     </div>
   </section>
 
